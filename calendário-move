@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MoveChamps 2026 - Countdown</title>
     <style>
+        /* Importação de fontes (Orbitron para títulos, Rajdhani para texto comum) */
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
 
         * {
@@ -14,6 +15,7 @@
         }
 
         body {
+            /* Fundo com gradiente radial profundo e escuro */
             background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
             color: white;
             height: 100vh;
@@ -25,11 +27,27 @@
             font-family: 'Rajdhani', sans-serif;
         }
 
-        /* Título Principal */
+        /* Container do Cabeçalho (Lobo e Título) */
         .header-container {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 3rem; /* Espaço até o contador */
             animation: fadeInDown 1.5s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centraliza a imagem e o texto */
+            gap: 15px; /* Espaço entre o lobo e o título */
+        }
+
+        /* ESTILIZAÇÃO DA NOVA IMAGEM DO LOBO */
+        .wolf-logo {
+            width: 350px; /* Tamanho considerável na tela */
+            max-width: 90%; /* Responsivo em telas pequenas */
+            height: auto; /* Mantém a proporção */
+            /* Efeito de brilho externo (glow) para combinar com o tema */
+            filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.6));
+            opacity: 0; /* Inicia invisível para animação */
+            animation: fadeInImage 2s ease-out forwards;
+            animation-delay: 0.5s; /* Começa um pouco depois do título */
         }
 
         h1 {
@@ -40,7 +58,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: 8px;
-            margin-bottom: 10px;
             filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.4));
         }
 
@@ -50,17 +67,10 @@
             color: #00d2ff;
             text-transform: uppercase;
             opacity: 0.8;
+            margin-top: -10px; /* Aproxima do título principal */
         }
 
-        /* O Lobo Piscando */
-        .wolf-icon {
-            font-size: 5rem;
-            margin-bottom: 1rem;
-            display: inline-block;
-            animation: blinkWolf 3s infinite;
-        }
-
-        /* Container do Relógio */
+        /* Container do Relógio (Contador) */
         #countdown {
             display: flex;
             gap: 25px;
@@ -70,19 +80,18 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            background: rgba(0, 210, 255, 0.03);
+            background: rgba(0, 210, 255, 0.03); /* Fundo com tom azulado sutil */
             padding: 30px;
             border-radius: 20px;
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px); /* Efeito de vidro */
             border: 1px solid rgba(0, 210, 255, 0.2);
             min-width: 140px;
-            position: relative;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 210, 255, 0.1);
         }
 
         .container:hover {
-            transform: scale(1.1);
+            transform: scale(1.1); /* Zoom ao passar o mouse */
             border-color: #00d2ff;
             box-shadow: 0 0 50px rgba(0, 210, 255, 0.3);
         }
@@ -104,7 +113,7 @@
             font-weight: 700;
         }
 
-        /* Background Animated Glow */
+        /* Efeito de Brilho de Fundo Animado */
         .glow {
             position: absolute;
             width: 500px;
@@ -117,15 +126,15 @@
             animation: moveGlow 10s infinite alternate;
         }
 
-        /* Animações Keyframes */
-        @keyframes blinkWolf {
-            0%, 90%, 100% { transform: scale(1); opacity: 1; filter: brightness(1); }
-            95% { transform: scale(0.95); opacity: 0.5; filter: brightness(2); }
-        }
-
+        /* Animações (Keyframes) */
         @keyframes fadeInDown {
             from { opacity: 0; transform: translateY(-50px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInImage {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         @keyframes moveGlow {
@@ -133,12 +142,14 @@
             to { transform: translate(50%, 20%); }
         }
 
-        /* Responsividade */
+        /* Responsividade para telas menores */
         @media (max-width: 768px) {
             h1 { font-size: 2.2rem; letter-spacing: 3px; }
+            .date-text { font-size: 1rem; letter-spacing: 5px; }
             #countdown { flex-wrap: wrap; justify-content: center; gap: 15px; }
             .container { min-width: 110px; padding: 15px; }
             .number { font-size: 2.8rem; }
+            .wolf-logo { width: 250px; } /* Reduz o logo no mobile */
         }
     </style>
 </head>
@@ -147,7 +158,8 @@
     <div class="glow"></div>
     
     <div class="header-container">
-        <div class="wolf-icon">🐺</div>
+        <img src="move.png" alt="Logo Move" class="wolf-logo">
+        
         <h1>MoveChamps 2026</h1>
         <div class="date-text">23 de Maio</div>
     </div>
@@ -174,28 +186,34 @@
     <script>
         function updateCountdown() {
             // Define a data alvo para 23 de Maio de 2026
+            // Como é um evento futuro, o JavaScript calculará a diferença corretamente.
             const targetDate = new Date("May 23, 2026 00:00:00").getTime();
             
             const now = new Date().getTime();
             const difference = targetDate - now;
 
+            // Se o tempo acabar
             if (difference <= 0) {
                 document.getElementById('countdown').innerHTML = "<h2 style='font-family:Orbitron; color:#00d2ff; font-size: 3rem;'>O EVENTO COMEÇOU!</h2>";
                 return;
             }
 
+            // Cálculos matemáticos para dias, horas, minutos e segundos
             const d = Math.floor(difference / (1000 * 60 * 60 * 24));
             const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((difference % (1000 * 60)) / 1000);
 
+            // Atualiza o HTML, garantindo que sempre tenha dois dígitos (ex: 05)
             document.getElementById('days').innerText = d.toString().padStart(2, '0');
             document.getElementById('hours').innerText = h.toString().padStart(2, '0');
             document.getElementById('minutes').innerText = m.toString().padStart(2, '0');
             document.getElementById('seconds').innerText = s.toString().padStart(2, '0');
         }
 
+        // Executa a função a cada 1 segundo (1000ms)
         setInterval(updateCountdown, 1000);
+        // Executa uma vez imediatamente para não mostrar '00' no início
         updateCountdown();
     </script>
 </body>
