@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoveChamps 2026 - Countdown</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        /* Título Principal */
+        .header-container {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(to bottom, #fff, #00d2ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.4));
+        }
+
+        .date-text {
+            font-size: 1.5rem;
+            letter-spacing: 10px;
+            color: #00d2ff;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        /* O Lobo Piscando */
+        .wolf-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: blinkWolf 3s infinite;
+        }
+
+        /* Container do Relógio */
+        #countdown {
+            display: flex;
+            gap: 25px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(0, 210, 255, 0.03);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            min-width: 140px;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 210, 255, 0.1);
+        }
+
+        .container:hover {
+            transform: scale(1.1);
+            border-color: #00d2ff;
+            box-shadow: 0 0 50px rgba(0, 210, 255, 0.3);
+        }
+
+        .number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(0, 210, 255, 0.8);
+        }
+
+        .label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-top: 10px;
+            color: #00d2ff;
+            font-weight: 700;
+        }
+
+        /* Background Animated Glow */
+        .glow {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: #00d2ff;
+            filter: blur(180px);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.15;
+            animation: moveGlow 10s infinite alternate;
+        }
+
+        /* Animações Keyframes */
+        @keyframes blinkWolf {
+            0%, 90%, 100% { transform: scale(1); opacity: 1; filter: brightness(1); }
+            95% { transform: scale(0.95); opacity: 0.5; filter: brightness(2); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes moveGlow {
+            from { transform: translate(-50%, -50%); }
+            to { transform: translate(50%, 20%); }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; letter-spacing: 3px; }
+            #countdown { flex-wrap: wrap; justify-content: center; gap: 15px; }
+            .container { min-width: 110px; padding: 15px; }
+            .number { font-size: 2.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow"></div>
+    
+    <div class="header-container">
+        <div class="wolf-icon">🐺</div>
+        <h1>MoveChamps 2026</h1>
+        <div class="date-text">23 de Maio</div>
+    </div>
+
+    <div id="countdown">
+        <div class="container">
+            <div id="days" class="number">00</div>
+            <div class="label">Dias</div>
+        </div>
+        <div class="container">
+            <div id="hours" class="number">00</div>
+            <div class="label">Horas</div>
+        </div>
+        <div class="container">
+            <div id="minutes" class="number">00</div>
+            <div class="label">Minutos</div>
+        </div>
+        <div class="container">
+            <div id="seconds" class="number">00</div>
+            <div class="label">Segundos</div>
+        </div>
+    </div>
+
+    <script>
+        function updateCountdown() {
+            // Define a data alvo para 23 de Maio de 2026
+            const targetDate = new Date("May 23, 2026 00:00:00").getTime();
+            
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference <= 0) {
+                document.getElementById('countdown').innerHTML = "<h2 style='font-family:Orbitron; color:#00d2ff; font-size: 3rem;'>O EVENTO COMEÇOU!</h2>";
+                return;
+            }
+
+            const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = d.toString().padStart(2, '0');
+            document.getElementById('hours').innerText = h.toString().padStart(2, '0');
+            document.getElementById('minutes').innerText = m.toString().padStart(2, '0');
+            document.getElementById('seconds').innerText = s.toString().padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
