@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoveChamps 2026 - Countdown</title>
+    <title>MoveChamps 2026 - Official Countdown</title>
     <style>
-        /* Importação de fontes (Orbitron para títulos, Rajdhani para texto comum) */
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap');
 
         * {
             margin: 0;
@@ -15,8 +14,7 @@
         }
 
         body {
-            /* Fundo com gradiente radial profundo e escuro */
-            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+            background: #050505; /* Fundo ainda mais profundo */
             color: white;
             height: 100vh;
             display: flex;
@@ -25,143 +23,179 @@
             align-items: center;
             overflow: hidden;
             font-family: 'Rajdhani', sans-serif;
+            perspective: 1000px;
         }
 
-        /* Container do Cabeçalho (Lobo e Título) */
+        /* Efeito de Partículas ao fundo */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1b2735 0%, #050505 100%);
+            z-index: -2;
+        }
+
+        /* Logo do Lobo com animação Floating e Neon Pulse */
+        .wolf-logo {
+            width: 380px;
+            max-width: 85%;
+            height: auto;
+            filter: drop-shadow(0 0 20px rgba(0, 210, 255, 0.5));
+            animation: float 4s ease-in-out infinite, neonPulse 3s infinite alternate;
+            z-index: 1;
+        }
+
         .header-container {
             text-align: center;
-            margin-bottom: 3rem; /* Espaço até o contador */
+            margin-bottom: 3.5rem;
             animation: fadeInDown 1.5s ease-out;
             display: flex;
             flex-direction: column;
-            align-items: center; /* Centraliza a imagem e o texto */
-            gap: 15px; /* Espaço entre o lobo e o título */
-        }
-
-        /* ESTILIZAÇÃO DA NOVA IMAGEM DO LOBO */
-        .wolf-logo {
-            width: 350px; /* Tamanho considerável na tela */
-            max-width: 90%; /* Responsivo em telas pequenas */
-            height: auto; /* Mantém a proporção */
-            /* Efeito de brilho externo (glow) para combinar com o tema */
-            filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.6));
-            opacity: 0; /* Inicia invisível para animação */
-            animation: fadeInImage 2s ease-out forwards;
-            animation-delay: 0.5s; /* Começa um pouco depois do título */
+            align-items: center;
+            gap: 10px;
         }
 
         h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 4rem;
-            font-weight: 700;
-            background: linear-gradient(to bottom, #fff, #00d2ff);
+            font-size: 4.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            background: linear-gradient(to bottom, #ffffff 30%, #00d2ff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: 8px;
-            filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.4));
+            letter-spacing: 12px;
+            filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.3));
+            margin-top: 15px;
         }
 
         .date-text {
-            font-size: 1.5rem;
-            letter-spacing: 10px;
+            font-size: 1.4rem;
+            letter-spacing: 15px;
             color: #00d2ff;
             text-transform: uppercase;
-            opacity: 0.8;
-            margin-top: -10px; /* Aproxima do título principal */
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.8);
         }
 
-        /* Container do Relógio (Contador) */
+        /* Grid do Contador */
         #countdown {
             display: flex;
-            gap: 25px;
+            gap: 30px;
+            z-index: 2;
         }
 
+        /* Cartão Moderno com Reflexo */
         .container {
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
-            background: rgba(0, 210, 255, 0.03); /* Fundo com tom azulado sutil */
-            padding: 30px;
-            border-radius: 20px;
-            backdrop-filter: blur(15px); /* Efeito de vidro */
-            border: 1px solid rgba(0, 210, 255, 0.2);
-            min-width: 140px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 210, 255, 0.1);
+            background: rgba(255, 255, 255, 0.03);
+            padding: 35px 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 150px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+            transition: 0.5s;
+        }
+
+        /* Linha brilhante no topo do cartão */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(0, 210, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
         }
 
         .container:hover {
-            transform: scale(1.1); /* Zoom ao passar o mouse */
+            transform: translateY(-15px) scale(1.05);
             border-color: #00d2ff;
-            box-shadow: 0 0 50px rgba(0, 210, 255, 0.3);
+            background: rgba(0, 210, 255, 0.05);
+        }
+
+        .container:hover::before {
+            transform: translateX(100%);
         }
 
         .number {
             font-family: 'Orbitron', sans-serif;
-            font-size: 4.5rem;
-            font-weight: bold;
-            color: #ffffff;
-            text-shadow: 0 0 20px rgba(0, 210, 255, 0.8);
+            font-size: 5rem;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3), 0 0 30px rgba(0, 210, 255, 0.6);
         }
 
         .label {
-            font-size: 1rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
-            letter-spacing: 4px;
-            margin-top: 10px;
+            letter-spacing: 5px;
+            margin-top: 15px;
             color: #00d2ff;
             font-weight: 700;
         }
 
-        /* Efeito de Brilho de Fundo Animado */
-        .glow {
+        /* Glow dinâmico de fundo */
+        .bg-glow {
             position: absolute;
-            width: 500px;
-            height: 500px;
-            background: #00d2ff;
-            filter: blur(180px);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 210, 255, 0.2), transparent 70%);
             border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             z-index: -1;
-            opacity: 0.15;
-            animation: moveGlow 10s infinite alternate;
+            animation: pulseGlow 5s infinite alternate;
         }
 
-        /* Animações (Keyframes) */
+        /* ANIMAÇÕES */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        @keyframes neonPulse {
+            from { filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.4)); }
+            to { filter: drop-shadow(0 0 35px rgba(0, 210, 255, 0.9)); }
+        }
+
+        @keyframes pulseGlow {
+            from { opacity: 0.3; scale: 1; }
+            to { opacity: 0.6; scale: 1.2; }
+        }
+
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-50px); }
+            from { opacity: 0; transform: translateY(-100px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes fadeInImage {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        @keyframes moveGlow {
-            from { transform: translate(-50%, -50%); }
-            to { transform: translate(50%, 20%); }
-        }
-
-        /* Responsividade para telas menores */
+        /* Estilo mobile */
         @media (max-width: 768px) {
-            h1 { font-size: 2.2rem; letter-spacing: 3px; }
-            .date-text { font-size: 1rem; letter-spacing: 5px; }
+            h1 { font-size: 2.5rem; letter-spacing: 5px; }
+            .wolf-logo { width: 250px; }
             #countdown { flex-wrap: wrap; justify-content: center; gap: 15px; }
-            .container { min-width: 110px; padding: 15px; }
-            .number { font-size: 2.8rem; }
-            .wolf-logo { width: 250px; } /* Reduz o logo no mobile */
+            .container { min-width: 120px; padding: 20px; }
+            .number { font-size: 3rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="glow"></div>
+    <div class="particles"></div>
+    <div class="bg-glow"></div>
     
     <div class="header-container">
-        <img src="move.png" alt="Logo Move" class="wolf-logo">
-        
-        <h1>MoveChamps 2026</h1>
-        <div class="date-text">23 de Maio</div>
+        <img src="move.jpeg" alt="Logo Move" class="wolf-logo">
+        <h1>MoveChamps</h1>
+        <div class="date-text">23 de Maio 2026</div>
     </div>
 
     <div id="countdown">
@@ -185,35 +219,27 @@
 
     <script>
         function updateCountdown() {
-            // Define a data alvo para 23 de Maio de 2026
-            // Como é um evento futuro, o JavaScript calculará a diferença corretamente.
             const targetDate = new Date("May 23, 2026 00:00:00").getTime();
-            
             const now = new Date().getTime();
-            const difference = targetDate - now;
+            const diff = targetDate - now;
 
-            // Se o tempo acabar
-            if (difference <= 0) {
-                document.getElementById('countdown').innerHTML = "<h2 style='font-family:Orbitron; color:#00d2ff; font-size: 3rem;'>O EVENTO COMEÇOU!</h2>";
+            if (diff <= 0) {
+                document.getElementById('countdown').innerHTML = "<h1>O MOMENTO CHEGOU!</h1>";
                 return;
             }
 
-            // Cálculos matemáticos para dias, horas, minutos e segundos
-            const d = Math.floor(difference / (1000 * 60 * 60 * 24));
-            const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((difference % (1000 * 60)) / 1000);
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
 
-            // Atualiza o HTML, garantindo que sempre tenha dois dígitos (ex: 05)
             document.getElementById('days').innerText = d.toString().padStart(2, '0');
             document.getElementById('hours').innerText = h.toString().padStart(2, '0');
             document.getElementById('minutes').innerText = m.toString().padStart(2, '0');
             document.getElementById('seconds').innerText = s.toString().padStart(2, '0');
         }
 
-        // Executa a função a cada 1 segundo (1000ms)
         setInterval(updateCountdown, 1000);
-        // Executa uma vez imediatamente para não mostrar '00' no início
         updateCountdown();
     </script>
 </body>
