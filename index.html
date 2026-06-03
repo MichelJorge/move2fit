@@ -268,6 +268,7 @@
     letter-spacing: 0.2em; text-transform: uppercase;
     padding: 0.25rem 0.6rem; border-radius: 20px;
     backdrop-filter: blur(8px);
+    z-index: 5;
   }
 
   .carousel-dots {
@@ -348,7 +349,7 @@
     font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--text-light);
   }
 
-  /* Placeholder slide style */
+  /* Fallback alternativo automático caso o navegador bloqueie espaços no link */
   .placeholder-slide {
     background: linear-gradient(135deg, #d9c2f5 0%, #b89dd4 100%);
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -365,15 +366,12 @@
 </head>
 <body>
 
-<!-- floating particles -->
 <div id="particles"></div>
 
-<!-- top bar -->
 <div class="top-bar">
   <span class="top-bar-text">Para a Mamis &nbsp;💜&nbsp; Com todo amor</span>
 </div>
 
-<!-- ──── HERO ──── -->
 <section class="hero" style="padding-top:4rem">
   <span class="hero-eyebrow">uma mensagem especial</span>
   <h1 class="hero-title">Mamis</h1>
@@ -385,7 +383,6 @@
   </div>
 </section>
 
-<!-- divider -->
 <div class="divider">
   <svg viewBox="0 0 400 30" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0 15 Q100 5 200 15 Q300 25 400 15" stroke="#b89dd4" stroke-width="1" fill="none"/>
@@ -395,13 +392,12 @@
   </svg>
 </div>
 
-<!-- ──── LETTER ──── -->
 <section class="letter-section">
   <div class="letter-card reveal">
     <span class="letter-label">carta para você</span>
     <div class="letter-text">
       <p>Mamis,</p>
-      <p>Eu já escrevi mil vezes o quanto você é importante para mim, e também já falei isso inúmeras vezes. Mas nunca me canso de dizer o quanto você é especial e o quanto significa na minha vida — e acredito que na vida de todos que têm o privilégio de conhecê-la.</p>
+      <p>Eu já escrevi mil vezes o quanto você é importante para mim, e também já falou isso inúmeras vezes. Mas nunca me canso de dizer o quanto você é especial e o quanto significa na minha vida — e acredito que na vida de todos que têm o privilégio de conhecê-la.</p>
       <p>Falando por mim, você é uma das minhas pessoas favoritas, talvez até <em>A</em> minha favorita.</p>
       <p>O que você significa para mim é algo impossível de explicar completamente. Só o privilégio de ter você e poder te chamar de mãe já é um presente único e especial. Mas saber que, quando eu precisar, tenho você ao meu lado, e que o carinho que sentimos uma pela outra é realmente de mãe e filha, torna tudo ainda mais especial.</p>
       <p>Eu sempre serei grata por ter você e sua família em minha vida. Poder te chamar de mãe e tê-la como tal é uma alegria imensa para mim.</p>
@@ -414,7 +410,6 @@
   </div>
 </section>
 
-<!-- divider -->
 <div class="divider reveal reveal-delay-1">
   <svg viewBox="0 0 400 30" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0 15 Q100 25 200 15 Q300 5 400 15" stroke="#b89dd4" stroke-width="1" fill="none"/>
@@ -424,50 +419,42 @@
   </svg>
 </div>
 
-<!-- ──── CAROUSEL ──── -->
 <section class="carousel-section reveal reveal-delay-2">
   <p class="section-label">nossas memórias</p>
 
   <div class="carousel-track-wrapper">
     <div class="carousel-track" id="carouselTrack">
 
-      <!-- FOTO 1 — substitua o src pelo link raw do GitHub -->
       <div class="carousel-slide" data-index="0">
-        <img src="FOTO_1_URL" alt="Memória 1"
-             onerror="this.parentNode.innerHTML=placeholderHTML('📷','Foto 1')">
+        <img src="midia/WhatsApp Image 2026-06-03 at 11.38.20.jpeg" 
+             onerror="this.onerror=null; this.src=encodeURIComponent('midia/WhatsApp Image 2026-06-03 at 11.38.20.jpeg');" alt="Memória 1">
         <div class="slide-overlay"></div>
         <span class="slide-number">01</span>
       </div>
 
-      <!-- FOTO 2 -->
       <div class="carousel-slide" data-index="1">
-        <img src="FOTO_2_URL" alt="Memória 2"
-             onerror="this.parentNode.innerHTML=placeholderHTML('📷','Foto 2')">
+        <img src="midia/WhatsApp Image 2026-06-03 at 11.38.20 (1).jpeg" 
+             onerror="this.onerror=null; this.src=encodeURIComponent('midia/WhatsApp Image 2026-06-03 at 11.38.20 (1).jpeg');" alt="Memória 2">
         <div class="slide-overlay"></div>
         <span class="slide-number">02</span>
       </div>
 
-      <!-- FOTO 3 -->
       <div class="carousel-slide" data-index="2">
-        <img src="FOTO_3_URL" alt="Memória 3"
-             onerror="this.parentNode.innerHTML=placeholderHTML('📷','Foto 3')">
+        <img src="midia/WhatsApp Image 2026-06-03 at 11.38.20 (2).jpeg" 
+             onerror="this.onerror=null; this.src=encodeURIComponent('midia/WhatsApp Image 2026-06-03 at 11.38.20 (2).jpeg');" alt="Memória 3">
         <div class="slide-overlay"></div>
         <span class="slide-number">03</span>
       </div>
 
-      <!-- FOTO 4 -->
       <div class="carousel-slide" data-index="3">
-        <img src="FOTO_4_URL" alt="Memória 4"
-             onerror="this.parentNode.innerHTML=placeholderHTML('📷','Foto 4')">
+        <img src="midia/WhatsApp Image 2026-06-03 at 11.38.21.jpeg" 
+             onerror="this.onerror=null; this.src=encodeURIComponent('midia/WhatsApp Image 2026-06-03 at 11.38.21.jpeg');" alt="Memória 4">
         <div class="slide-overlay"></div>
         <span class="slide-number">04</span>
       </div>
 
-      <!-- VÍDEO — substitua pelo link raw do GitHub -->
       <div class="carousel-slide" data-index="4">
-        <video src="VIDEO_URL" controls playsinline
-               poster=""
-               onerror="this.parentNode.innerHTML=placeholderHTML('🎬','Vídeo')">
+        <video src="midia/WhatsApp Video 2026-06-03 at 11.38.39.mp4" controls playsinline type="video/mp4">
         </video>
         <div class="slide-overlay"></div>
         <span class="video-badge">▶ vídeo</span>
@@ -486,7 +473,6 @@
   </div>
 </section>
 
-<!-- ──── CLOSING ──── -->
 <section class="closing">
   <p class="closing-quote" id="closingQuote">
     "Você se tornou minha mãe,<br>e isso não tem preço."
@@ -509,15 +495,6 @@
     `;
     container.appendChild(p);
   }
-
-  // ── Placeholder helper ──────────────────────
-  window.placeholderHTML = (icon, label) => `
-    <div class="placeholder-slide">
-      <div class="ph-icon">${icon}</div>
-      <div class="ph-label">${label}</div>
-      <div style="font-size:0.65rem;opacity:0.6;margin-top:0.3rem;">Adicione a URL do GitHub</div>
-    </div>
-    <div class="slide-overlay"></div>`;
 
   // ── Carousel ───────────────────────────────
   const track = document.getElementById('carouselTrack');
